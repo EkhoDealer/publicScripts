@@ -5,7 +5,7 @@ var EkhoDealerButton = function(config) {
   this.amount = config.amount;
   this.currency = config.currency;
   this.language = config.language;
-  this.baseUrl = config.baseUrl || 'https://partial.ly';
+  this.baseUrl = config.baseUrl || 'http://localhost:3000/checkout';
 
   // make sure baseUrl has no trailing slash
   if (this.baseUrl.slice(-1) == '/') this.baseUrl = this.baseUrl.slice(0, -1);
@@ -28,7 +28,7 @@ var EkhoDealerButton = function(config) {
 
   // updated css button config options
   this.cssButton = typeof(config.cssButton) === 'undefined' ? false : config.cssButton;
-  this.cssButtonText = config.cssButtonText || 'Purchase with';
+  this.cssButtonText = config.cssButtonText || 'Order with';
   this.cssButtonShowLogo =  typeof(config.cssButtonShowLogo) === 'undefined' ? true : config.cssButtonShowLogo;
   // full or glyph
   this.cssButtonLogoType = config.cssButtonLogoType || 'full';
@@ -468,6 +468,7 @@ EkhoDealerButton.prototype.addHiddenInput = function(name, value) {
   this.elements.form.appendChild(input);
 }
 
+// Used when the URL generated is too long
 EkhoDealerButton.prototype.generateForm = function() {
   var form = this.elements.form;
   if ( ! form) {
@@ -568,7 +569,7 @@ EkhoDealerButton.prototype.renderButton = function() {
     var btn = document.createElement('a');
     var generatedUrl = this.generateUrl();
     btn.setAttribute('href', generatedUrl);
-    btn.setAttribute('class', 'partiallyButton');
+    btn.setAttribute('class', 'ekhoDealerCheckoutButton');
 
     if (this.cssButtonWidth) {
       btn.style.width = this.cssButtonWidth;
@@ -605,7 +606,7 @@ EkhoDealerButton.prototype.renderButton = function() {
       // img for the button
       var img = document.createElement('img');
       img.setAttribute('src', this.imageUrl);
-      img.setAttribute('alt', 'Purchase with Partial.ly payment plan');
+      img.setAttribute('alt', 'Purchase with Ekho Dealer');
       btn.appendChild(img);
     }
 
@@ -615,7 +616,7 @@ EkhoDealerButton.prototype.renderButton = function() {
 
     // test if browser truncated URL
     if (btn.href != generatedUrl || btn.href.length > 11000) {
-      console.warn('Partial.ly: checkout URL too long. Generating form to POST checkout data to partial.ly');
+      console.warn('Ekho Dealer: Checkout URL is too long. Generating form to POST checkout data to Ekho Dealer');
       this.urlTruncated = true;
       // generate the form
       this.generateForm();

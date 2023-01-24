@@ -1,0 +1,31 @@
+<div id="ekhoDealerProductButtonContainer"></div>
+<script>
+    document.partiallyButtonConfig = {
+        offer: '5db4c9b7-122c-40e3-a454-c5b06ef84d98',
+        returnUrl: '{{shop.url}}/cart',
+        returnConfirmedUrl: '{{shop.url}}/cart/clear',
+
+        cssButton: true,
+        cssButtonText: 'Order with',
+
+        cssButtonShowLogo: true,
+        cssButtonLogoType: 'full',
+        cssButtonLogoPlacement: 'after',
+
+
+
+        renderSelector: '#ekhoDealerProductButtonContainer',
+
+        baseUrl: 'http://localhost:3000/checkout',
+
+        shopifyProduct: {{product | json}},
+        shopifyVariant: {{product.selected_or_first_available_variant | json}}
+    };
+   (function() {
+     var script = document.createElement('script');
+     script.type = 'text/javascript';
+     script.src = 'https://ekhodealer.github.io/publicScripts/ekhoDealerCheckoutButton.js';
+     script.async = true;
+     document.head.appendChild(script);
+   })();
+</script>
