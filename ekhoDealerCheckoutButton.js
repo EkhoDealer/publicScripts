@@ -146,7 +146,8 @@ EkhoDealerButton.prototype.updateShopifyCart = function() {
       sku: item.sku,
       price: item.price / 100,
       quantity: item.quantity,
-      total: item.line_price / 100
+      total: item.line_price / 100,
+      options: p.options_with_values,
     };
     // this will factor in cart discounts
     // unit price
@@ -156,7 +157,8 @@ EkhoDealerButton.prototype.updateShopifyCart = function() {
     // needed when creating order with shopify
     if (item.total_discount) data.discount = item.total_discount / 100;
     if (item.image) {
-      data.image = item.image.replace(/(\.[^.]*)$/, "_small$1");
+      // data.image = item.image.replace(/(\.[^.]*)$/, "_small$1");
+      data.image = item.image.replace(/(\.[^.]*)$/, "_large$1");
       if (data.image.startsWith('//')) data.image = 'https:' + data.image;
     }
     if (item.grams) {
@@ -184,10 +186,12 @@ EkhoDealerButton.prototype.updateShopifyProduct = function() {
     name: p.title,
     quantity: 1,
     price: p.price / 100,
-    total: p.price / 100
+    total: p.price / 100,
+    options: p.options_with_values,
   };
   if (p.featured_image) {
-    item.image = p.featured_image.replace(/(\.[^.]*)$/, "_small$1");
+    // item.image = p.featured_image.replace(/(\.[^.]*)$/, "_small$1");
+    item.image = p.featured_image.replace(/(\.[^.]*)$/, "_large$1");
     if (item.image.startsWith('//')) item.image = 'https:' + item.image;
   }
   if (this.shopifyVariant) {
@@ -225,10 +229,12 @@ EkhoDealerButton.prototype.shopifyVariantUpdated = function(e) {
     this.amount = item.price * item.quantity;
     item.name = this.shopifyVariant.name;
     if (typeof this.shopifyVariant.featured_image == 'string') {
-      item.image = this.shopifyVariant.featured_image.replace(/(\.[^.]*)$/, "_small$1");
+      // item.image = this.shopifyVariant.featured_image.replace(/(\.[^.]*)$/, "_small$1");
+      item.image = this.shopifyVariant.featured_image.replace(/(\.[^.]*)$/, "_large$1");
     }
     if (typeof this.shopifyVariant.featured_image == 'object' && this.shopifyVariant.featured_image != null && this.shopifyVariant.featured_image.src) {
-      item.image = this.shopifyVariant.featured_image.src.replace(/(\.[^.]*)$/, "_small$1");
+      // item.image = this.shopifyVariant.featured_image.src.replace(/(\.[^.]*)$/, "_small$1");
+      item.image = this.shopifyVariant.featured_image.src.replace(/(\.[^.]*)$/, "_large$1");
     }
 
     if (item.image && item.image.startsWith('//')) item.image = 'https:' + item.image;
