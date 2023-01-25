@@ -1,11 +1,11 @@
 // Partial.ly checkout button v2.1.2
 
-var PartiallyButton = function(config) {
+var EkhoDealerButton = function(config) {
   this.offer = config.offer;
   this.amount = config.amount;
   this.currency = config.currency;
   this.language = config.language;
-  this.baseUrl = config.baseUrl || 'https://partial.ly';
+  this.baseUrl = config.baseUrl || 'http://localhost:3000';
 
   // make sure baseUrl has no trailing slash
   if (this.baseUrl.slice(-1) == '/') this.baseUrl = this.baseUrl.slice(0, -1);
@@ -28,7 +28,7 @@ var PartiallyButton = function(config) {
 
   // updated css button config options
   this.cssButton = typeof(config.cssButton) === 'undefined' ? false : config.cssButton;
-  this.cssButtonText = config.cssButtonText || 'Purchase with';
+  this.cssButtonText = config.cssButtonText || 'Order with';
   this.cssButtonShowLogo =  typeof(config.cssButtonShowLogo) === 'undefined' ? true : config.cssButtonShowLogo;
   // full or glyph
   this.cssButtonLogoType = config.cssButtonLogoType || 'full';
@@ -130,7 +130,7 @@ function isEmpty(obj) {
     return true;
 }
 
-PartiallyButton.prototype.updateShopifyCart = function() {
+EkhoDealerButton.prototype.updateShopifyCart = function() {
   this.meta.source = 'shopify';
   this.meta.items = [];
   this.amount = this.shopifyCart.total_price / 100;
@@ -172,7 +172,7 @@ PartiallyButton.prototype.updateShopifyCart = function() {
   if (this.shopifyCart.currency) this.currency = this.shopifyCart.currency;
 }
 
-PartiallyButton.prototype.updateShopifyProduct = function() {
+EkhoDealerButton.prototype.updateShopifyProduct = function() {
   console.log('PartiallyButton - setting shopify product');
   this.meta.source = 'shopify';
   var p = this.shopifyProduct;
@@ -210,7 +210,7 @@ PartiallyButton.prototype.updateShopifyProduct = function() {
   this.meta.items = [item];
 }
 
-PartiallyButton.prototype.shopifyVariantUpdated = function(e) {
+EkhoDealerButton.prototype.shopifyVariantUpdated = function(e) {
   var variant = e.detail;
   console.log('PartiallyButton - shopify variant updated');
   if (variant && variant.available) {
@@ -239,7 +239,7 @@ PartiallyButton.prototype.shopifyVariantUpdated = function(e) {
   }
 }
 
-PartiallyButton.prototype.updateWooProduct = function() {
+EkhoDealerButton.prototype.updateWooProduct = function() {
   this.meta.source = 'woocommerce';
   // load woo product details
   var p = this.woocommerceProduct;
@@ -259,7 +259,7 @@ PartiallyButton.prototype.updateWooProduct = function() {
   this.attachWooVariantListener();
 }
 
-PartiallyButton.prototype.attachWooVariantListener = function() {
+EkhoDealerButton.prototype.attachWooVariantListener = function() {
   var el = document.querySelector('.single_variation_wrap');
   // woo commerce uses jquery, so should be available
   if (el && jQuery) {
@@ -290,7 +290,7 @@ PartiallyButton.prototype.attachWooVariantListener = function() {
   }
 }
 
-PartiallyButton.prototype.getBigCommerceCartId = function() {
+EkhoDealerButton.prototype.getBigCommerceCartId = function() {
   // make sure it's not already set
   if (this.meta.bigcommerce_cart_id) return;
 
@@ -330,7 +330,7 @@ PartiallyButton.prototype.getBigCommerceCartId = function() {
 }
 // this is the version we get from stencil
 // looks like storefront api uses different fields grrr
-PartiallyButton.prototype.updateBigcommerceCart = function() {
+EkhoDealerButton.prototype.updateBigcommerceCart = function() {
   this.meta.source = 'bigcommerce';
   this.meta.items = [];
 
@@ -417,7 +417,7 @@ function serialize(obj, prefix) {
   return str.join("&");
 }
 
-PartiallyButton.prototype.generateUrl = function() {
+EkhoDealerButton.prototype.generateUrl = function() {
   // build the URL
   var url = this.baseUrl + '/checkout?offer='+this.offer+'&amount='+this.amount
 
@@ -460,7 +460,7 @@ PartiallyButton.prototype.generateUrl = function() {
   return url;
 }
 
-PartiallyButton.prototype.addHiddenInput = function(name, value) {
+EkhoDealerButton.prototype.addHiddenInput = function(name, value) {
   var input = document.createElement('input');
   input.setAttribute('type', 'hidden');
   input.setAttribute('name', name);
@@ -468,7 +468,8 @@ PartiallyButton.prototype.addHiddenInput = function(name, value) {
   this.elements.form.appendChild(input);
 }
 
-PartiallyButton.prototype.generateForm = function() {
+// Used when the URL generated is too long
+EkhoDealerButton.prototype.generateForm = function() {
   var form = this.elements.form;
   if ( ! form) {
     form = document.createElement('form');
@@ -562,13 +563,13 @@ PartiallyButton.prototype.generateForm = function() {
 
 }
 
-PartiallyButton.prototype.renderButton = function() {
+EkhoDealerButton.prototype.renderButton = function() {
   var el = document.querySelector(this.renderSelector);
   if (el) {
     var btn = document.createElement('a');
     var generatedUrl = this.generateUrl();
     btn.setAttribute('href', generatedUrl);
-    btn.setAttribute('class', 'partiallyButton');
+    btn.setAttribute('class', 'ekhoDealerCheckoutButton');
 
     if (this.cssButtonWidth) {
       btn.style.width = this.cssButtonWidth;
@@ -605,7 +606,7 @@ PartiallyButton.prototype.renderButton = function() {
       // img for the button
       var img = document.createElement('img');
       img.setAttribute('src', this.imageUrl);
-      img.setAttribute('alt', 'Purchase with Partial.ly payment plan');
+      img.setAttribute('alt', 'Purchase with Ekho Dealer');
       btn.appendChild(img);
     }
 
@@ -615,7 +616,7 @@ PartiallyButton.prototype.renderButton = function() {
 
     // test if browser truncated URL
     if (btn.href != generatedUrl || btn.href.length > 11000) {
-      console.warn('Partial.ly: checkout URL too long. Generating form to POST checkout data to partial.ly');
+      console.warn('Ekho Dealer: Checkout URL is too long. Generating form to POST checkout data to Ekho Dealer');
       this.urlTruncated = true;
       // generate the form
       this.generateForm();
@@ -629,7 +630,7 @@ PartiallyButton.prototype.renderButton = function() {
   }
 }
 
-PartiallyButton.prototype.attachButton = function() {
+EkhoDealerButton.prototype.attachButton = function() {
   var btn = this.attachElement || document.querySelector(this.attachSelector);
   if (btn) {
     this.elements.button = btn;
@@ -651,7 +652,7 @@ PartiallyButton.prototype.attachButton = function() {
   }
 }
 
-PartiallyButton.prototype.buttonClicked = function(e) {
+EkhoDealerButton.prototype.buttonClicked = function(e) {
   console.log('PartiallyButton clicked');
   e.preventDefault();
   e.stopImmediatePropagation();
@@ -667,7 +668,7 @@ PartiallyButton.prototype.buttonClicked = function(e) {
 
 }
 
-PartiallyButton.prototype.quantityUpdateEvent = function(e) {
+EkhoDealerButton.prototype.quantityUpdateEvent = function(e) {
   var q = parseFloat(e.target.value);
   // assume we're only dealing with a single product
   var prod = this.meta.items[0];
@@ -683,12 +684,12 @@ PartiallyButton.prototype.quantityUpdateEvent = function(e) {
   }
 }
 
-PartiallyButton.prototype.noteUpdated = function() {
+EkhoDealerButton.prototype.noteUpdated = function() {
   this.meta.note = this.elements.note.value;
   this.updateButtonHref();
 }
 
-PartiallyButton.prototype.attachQuantityListener = function() {
+EkhoDealerButton.prototype.attachQuantityListener = function() {
   var el = document.querySelector(this.quantitySelector);
   if ( ! el) {
     console.warn('PartiallyButton could not find quantity with selector '+this.quantitySelector);
@@ -699,7 +700,7 @@ PartiallyButton.prototype.attachQuantityListener = function() {
   el.addEventListener('change', this.quantityUpdateEvent.bind(this));
 }
 
-PartiallyButton.prototype.loadButtonCss = function() {
+EkhoDealerButton.prototype.loadButtonCss = function() {
   var head = document.head;
   var link = document.createElement('link');
   link.type = 'text/css'
@@ -708,14 +709,14 @@ PartiallyButton.prototype.loadButtonCss = function() {
   head.appendChild(link);
 }
 
-PartiallyButton.prototype.updateButtonHref = function() {
+EkhoDealerButton.prototype.updateButtonHref = function() {
   if (this.elements.button) {
     this.elements.button.setAttribute('href', this.generateUrl());
   }
 }
 
 
-PartiallyButton.prototype.init = function() {
+EkhoDealerButton.prototype.init = function() {
   if (this.renderSelector) {
     this.renderButton();
   }
@@ -727,10 +728,10 @@ PartiallyButton.prototype.init = function() {
   }
 }
 
-window.PartiallyButton = PartiallyButton;
+window.PartiallyButton = EkhoDealerButton;
 
 // see if there's a default config to auto init a button
 if (document.partiallyButtonConfig) {
-  var btn = new PartiallyButton(document.partiallyButtonConfig);
+  var btn = new EkhoDealerButton(document.partiallyButtonConfig);
   btn.init();
 }
