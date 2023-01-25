@@ -706,7 +706,9 @@ EkhoDealerButton.prototype.loadButtonCss = function() {
   var link = document.createElement('link');
   link.type = 'text/css'
   link.rel = 'stylesheet'
-  link.href = this.baseUrl + '/css/partially-button.css';
+  // link.href = this.baseUrl + '/css/partially-button.css';
+  link.href = 'https://ekhodealer.github.io/publicScripts/ekhoDealerCheckoutButton.css'
+
   head.appendChild(link);
 }
 
