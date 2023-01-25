@@ -5,7 +5,8 @@ var EkhoDealerButton = function(config) {
   this.amount = config.amount;
   this.currency = config.currency;
   this.language = config.language;
-  this.baseUrl = config.baseUrl || 'http://localhost:3000/checkout';
+  this.baseUrl = config.baseUrl || 'http://localhost:3000';
+
 
   // make sure baseUrl has no trailing slash
   if (this.baseUrl.slice(-1) == '/') this.baseUrl = this.baseUrl.slice(0, -1);
