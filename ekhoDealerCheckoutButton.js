@@ -148,7 +148,7 @@ EkhoDealerButton.prototype.updateShopifyCart = function() {
       quantity: item.quantity,
       total: item.line_price / 100,
       options: item.options_with_values,
-      description: item.product.description,
+      product: item.product,
     };
     // this will factor in cart discounts
     // unit price
