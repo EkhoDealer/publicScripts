@@ -146,7 +146,8 @@ EkhoDealerButton.prototype.updateShopifyCart = function() {
     }
     // Trim the name to remove the part with the choices
     if (item.title.includes(' - ')) {
-      const truncatedName = substr(item.title, 0, item.title.lastIndexOf(" - "));
+      const title = item.title;
+      const truncatedName = title.substring(0, item.title.lastIndexOf(" - "));
       item.title = truncatedName;
     }
     var data = {
