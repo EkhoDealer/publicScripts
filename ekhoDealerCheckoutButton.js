@@ -135,13 +135,15 @@ EkhoDealerButton.prototype.updateShopifyCart = function() {
   this.meta.source = 'shopify';
   this.meta.items = [];
   this.amount = this.shopifyCart.total_price / 100;
-  console.log('Shopify cart: ', this.shopifyCart);
   
 
   for (var i = 0; i < this.shopifyCart.items.length; i++) {
-    
     var item = this.shopifyCart.items[i];
-    console.log('Shopify product: ', item);
+    // Determine if we got given the default options. If yes, replace with empty array
+    if (item.options_with_values && item.options_with_values.length === 1 && item.options_with_values[0].name
+       === 'Title' && item.options_with_values[0].value === 'Default Title') {
+        item.options_with_values = [];
+    }
     var data = {
       id: item.id,
       variant_id: item.variant_id,
