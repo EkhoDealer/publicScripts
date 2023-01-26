@@ -144,6 +144,11 @@ EkhoDealerButton.prototype.updateShopifyCart = function() {
        === 'Title' && item.options_with_values[0].value === 'Default Title') {
         item.options_with_values = [];
     }
+    // Trim the name to remove the part with the choices
+    if (item.title.includes(' - ')) {
+      const truncatedName = substr(item.title, 0, item.title.lastIndexOf(" - "));
+      item.title = truncatedName;
+    }
     var data = {
       id: item.id,
       variant_id: item.variant_id,
