@@ -33,10 +33,9 @@
 </script>
 
 
-<!-- FROM CHECKOUT PAGE -->
 <div id="ekhoDealerCheckoutButtonContainer"></div>
 <script>
-    document.partiallyButtonConfig = {
+    document.ekhoDealerButtonConfig = {
         offer: '5db4c9b7-122c-40e3-a454-c5b06ef84d98',
         returnUrl: '{{shop.url}}/cart',
         returnConfirmedUrl: '{{shop.url}}/cart/clear',
@@ -47,20 +46,20 @@
         cssButtonShowLogo: true,
         cssButtonLogoType: 'full',
         cssButtonLogoPlacement: 'after',
-        oemId: '',
+
 
 
         renderSelector: '#ekhoDealerCheckoutButtonContainer',
 
         baseUrl: 'http://localhost:3000',
 
-        shopifyCart: {{ cart | json }},
+        shopifyCart: {{cart | json}}
     };
-   (function() {
-     var script = document.createElement('script');
-     script.type = 'text/javascript';
-     script.src = 'https://ekhodealer.github.io/publicScripts/ekhoDealerCheckoutButton.js';
-     script.async = true;
-     document.head.appendChild(script);
-   })();
+    (function() {
+      var script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = 'https://ekhodealer.github.io/publicScripts/ekhoDealerCheckoutButton.js';
+      script.async = true;
+      document.head.appendChild(script);
+    })();
 </script>

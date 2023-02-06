@@ -461,7 +461,6 @@ EkhoDealerButton.prototype.generateUrl = function() {
   if (this.currency) url += '&currency=' + this.currency;
   if (this.language) url += '&language=' + this.language;
   if (this.utm_campaign) url += '&utm_campaign=' + this.utm_campaign;
-
   if (this.customer) {
     for (var key in this.customer) {
       url += '&customer['+key+']='+encodeURIComponent(this.customer[key]);
@@ -753,7 +752,7 @@ EkhoDealerButton.prototype.init = function() {
 window.PartiallyButton = EkhoDealerButton;
 
 // see if there's a default config to auto init a button
-if (document.partiallyButtonConfig) {
-  var btn = new EkhoDealerButton(document.partiallyButtonConfig);
+if (document.ekhoDealerButtonConfig) {
+  var btn = new EkhoDealerButton(document.ekhoDealerButtonConfig);
   btn.init();
 }
