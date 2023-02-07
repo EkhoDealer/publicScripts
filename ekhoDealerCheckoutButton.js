@@ -11,7 +11,7 @@ var EkhoDealerButton = function(config) {
   // make sure baseUrl has no trailing slash
   if (this.baseUrl.slice(-1) == '/') this.baseUrl = this.baseUrl.slice(0, -1);
 
-  this.imageUrl = config.imageUrl || 'https://d2nacfpe3n8791.cloudfront.net/images/purchase-with-partially.png';
+  this.imageUrl = config.imageUrl || 'https://i.ibb.co/zFwpTsk/ekho-dealer-button-image.png';
   this.returnUrl = config.returnUrl;
   this.returnConfirmedUrl = config.returnConfirmedUrl || this.returnUrl;
   this.customer = config.customer;
