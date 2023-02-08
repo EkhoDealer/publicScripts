@@ -661,8 +661,7 @@ EkhoDealerButton.prototype.attachButton = function() {
 
     // attach click handler
     btn.addEventListener('click', this.buttonClicked.bind(this));
-  }
-  else {
+  } else {
     console.warn('PartiallyButton could not attach to element at '+this.attachSelector);
   }
 }
@@ -718,11 +717,9 @@ EkhoDealerButton.prototype.attachQuantityListener = function() {
 EkhoDealerButton.prototype.loadButtonCss = function() {
   var head = document.head;
   var link = document.createElement('link');
-  link.type = 'text/css'
-  link.rel = 'stylesheet'
-  // link.href = this.baseUrl + '/css/partially-button.css';
-  link.href = 'https://ekhodealer.github.io/publicScripts/ekhoDealerCheckoutButton.css'
-
+  link.type = 'text/css';
+  link.rel = 'stylesheet';
+  link.href = 'https://ekhodealer.github.io/publicScripts/ekhoDealerCheckoutButton.css';
   head.appendChild(link);
 }
 
