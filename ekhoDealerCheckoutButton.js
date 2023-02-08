@@ -11,7 +11,8 @@ var EkhoDealerButton = function(config) {
   // make sure baseUrl has no trailing slash
   if (this.baseUrl.slice(-1) == '/') this.baseUrl = this.baseUrl.slice(0, -1);
 
-  this.imageUrl = config.imageUrl || 'https://i.ibb.co/zFwpTsk/ekho-dealer-button-image.png';
+  // this.imageUrl = config.imageUrl || 'https://i.ibb.co/zFwpTsk/ekho-dealer-button-image.png';
+  this.imageUrl = 'https://i.ibb.co/zFwpTsk/ekho-dealer-button-image.png';
   this.returnUrl = config.returnUrl;
   this.returnConfirmedUrl = config.returnConfirmedUrl || this.returnUrl;
   this.customer = config.customer;
@@ -303,7 +304,6 @@ EkhoDealerButton.prototype.attachWooVariantListener = function() {
         item.variant_id = variation.variation_id;
         // reset button href
         if (this.elements.button) {
-          console.log('PartiallyButton updating button href');
           this.elements.button.setAttribute('href', this.generateUrl());
         }
     }.bind(this));
@@ -328,7 +328,6 @@ EkhoDealerButton.prototype.getBigCommerceCartId = function() {
         this.meta.bigcommerce_cart_id = cart.id;
         // see if we need to
         if (this.elements.button) {
-          console.log('PartiallyButton updating button href with BigCommerce cart id '+this.meta.bigcommerce_cart_id);
           if (this.urlTruncated) {
             this.addHiddenInput('meta[bigcommerce_cart_id]', this.meta.bigcommerce_cart_id);
           }
@@ -344,7 +343,6 @@ EkhoDealerButton.prototype.getBigCommerceCartId = function() {
   }.bind(this);
 
   var url = '/api/storefront/cart';
-  console.log('getting '+url);
   req.open('GET', url, true);
   req.send();
 }
@@ -612,16 +610,14 @@ EkhoDealerButton.prototype.renderButton = function() {
           btn.classList.add('logoGlyph');
         }
 
-      }
-
+      } 
       if (this.cssButtonCustomBg) {
         btn.style.backgroundColor = this.cssButtonCustomBg;
       }
       else {
         btn.classList.add('gradientBg');
       }
-    }
-    else {
+    } else {
       // img for the button
       var img = document.createElement('img');
       img.setAttribute('src', this.imageUrl);
@@ -645,7 +641,7 @@ EkhoDealerButton.prototype.renderButton = function() {
     btn.addEventListener('click', this.buttonClicked.bind(this));
   }
   else {
-    console.warn('PartiallyButton could not render to selector '+this.renderSelector);
+    console.warn('Ekho Dealer button could not render to selector '+this.renderSelector);
   }
 }
 
