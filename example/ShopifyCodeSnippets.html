@@ -1,4 +1,9 @@
 
+<!-- GENERAL INSTRUCTIONS -->
+
+- OEMs on Shopify must go to theme -> Customize -> Product Page -> Buy buttons -> Uncheck "Show dynamic checkout button."
+
+
 <!-- FROM PRODUCT PAGE (isn't working right now) -->
 <div id="ekhoDealerCheckoutButtonContainer"></div>
 <script>
@@ -32,6 +37,15 @@
    })();
 </script>
 
+<!-- FROM CHECKOUT PAGE -->
+
+<!-- Need to add this to top of page, or delete all other checkout buttons -->
+<style>
+  /* Need to hide all other checkout buttons */
+  button[name=checkout] {
+    display: none;
+  }
+</style>
 
 <div id="ekhoDealerCheckoutButtonContainer"></div>
 <script>
@@ -63,3 +77,4 @@
       document.head.appendChild(script);
     })();
 </script>
+
