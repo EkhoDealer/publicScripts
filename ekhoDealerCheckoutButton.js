@@ -16,18 +16,15 @@ var EkhoDealerButton = function(config) {
   this.returnUrl = config.returnUrl;
   this.returnConfirmedUrl = config.returnConfirmedUrl || this.returnUrl;
   this.customer = config.customer;
-
   this.downPayment = config.downPayment;
   this.term = config.term;
   this.frequency = config.frequency;
-
   // renderTarget
   this.renderSelector = config.renderSelector;
   this.quantitySelector = config.quantitySelector;
   this.attachSelector = config.attachSelector;
   this.attachElement = config.attachElement;
   this.noteSelector = config.noteSelector;
-
   // updated css button config options
   this.cssButton = typeof(config.cssButton) === 'undefined' ? false : config.cssButton;
   this.cssButtonText = config.cssButtonText || 'Order with';
@@ -40,32 +37,24 @@ var EkhoDealerButton = function(config) {
   this.cssButtonCustomBg = config.cssButtonCustomBg;
   this.cssButtonTextColor = config.cssButtonTextColor;
   this.cssButtonWidth = config.cssButtonWidth;
-
   this.startsDate = config.startsDate;
-
   // see if we should load the html button css
   if (this.cssButton) {
     this.loadButtonCss();
   }
-
   this.meta = config.meta || {};
-
   this.utm_campaign = config.utm_campaign === undefined ? 'button' : config.utm_campaign;
-
   this.elements = {};
-
   if (this.noteSelector) {
     this.elements.note = document.querySelector(this.noteSelector);
     if (this.elements.note) {
       this.elements.note.addEventListener('keyup', this.noteUpdated.bind(this));
     }
   }
-
   if (config.woocommerceProduct) {
     this.woocommerceProduct = config.woocommerceProduct;
     this.updateWooProduct();
   }
-
   if (config.shopifyCart) {
     this.shopifyCart = config.shopifyCart;
     this.updateShopifyCart();
@@ -161,8 +150,10 @@ EkhoDealerButton.prototype.updateShopifyCart = function() {
       quantity: item.quantity,
       total: item.line_price / 100,
       options: item.options_with_values,
-      product: item.product,
+      tags: item.product.tags,
     };
+    // Try adding tags
+    
     // this will factor in cart discounts
     // unit price
     if (typeof item.final_price != 'undefined') data.price = item.final_price / 100;
