@@ -1,7 +1,21 @@
 
 <!-- GENERAL INSTRUCTIONS -->
+Remove checkout button from Product Page:
+1. OEMs on Shopify must go to theme -> Customize -> Product Page -> Buy buttons -> Uncheck "Show dynamic checkout button."
 
-- OEMs on Shopify must go to theme -> Customize -> Product Page -> Buy buttons -> Uncheck "Show dynamic checkout button."
+Remove checkout button from Cart notification:
+2. In your Shopify Admin go to: online store > themes > actions > edit code
+3. Find Asset > base.css and paste this at the bottom of the file:
+
+cart-notification [name='checkout']{
+  display: none !important;
+}
+button[name='checkout'] {
+  display: none !important;
+}
+.cart__dynamic-checkout-buttons {
+display: none !important;
+}
 
 
 <!-- FROM PRODUCT PAGE (isn't working right now) -->
@@ -38,14 +52,6 @@
 </script>
 
 <!-- FROM CHECKOUT PAGE -->
-
-<!-- Need to add this to top of page, or delete all other checkout buttons -->
-<style>
-  /* Need to hide all other checkout buttons */
-  button[name=checkout] {
-    display: none;
-  }
-</style>
 
 <div id="ekhoDealerCheckoutButtonContainer"></div>
 <script>
