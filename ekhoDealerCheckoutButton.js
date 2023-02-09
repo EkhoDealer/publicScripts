@@ -150,9 +150,11 @@ EkhoDealerButton.prototype.updateShopifyCart = function() {
       quantity: item.quantity,
       total: item.line_price / 100,
       options: item.options_with_values,
-      // tags: item.product.tags,
     };
     // Try adding tags
+    if (item.product_type) { 
+      data.tags = [item.product_type];
+    }
     
     // this will factor in cart discounts
     // unit price
