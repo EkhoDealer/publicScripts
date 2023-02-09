@@ -1,7 +1,6 @@
-// Partial.ly checkout button v2.1.2
+// EkhoDealerButton checkout button v1
 
 var EkhoDealerButton = function(config) {
-  this.offer = config.offer;
   this.amount = config.amount;
   this.currency = config.currency;
   this.language = config.language;
@@ -27,7 +26,7 @@ var EkhoDealerButton = function(config) {
   this.noteSelector = config.noteSelector;
   // updated css button config options
   this.cssButton = typeof(config.cssButton) === 'undefined' ? false : config.cssButton;
-  this.cssButtonText = config.cssButtonText || 'Order with';
+  this.cssButtonText = config.cssButtonText || 'Check out with Ekho Dealer';
   this.cssButtonShowLogo =  typeof(config.cssButtonShowLogo) === 'undefined' ? true : config.cssButtonShowLogo;
   // full or glyph
   this.cssButtonLogoType = config.cssButtonLogoType || 'full';
@@ -86,13 +85,8 @@ var EkhoDealerButton = function(config) {
       console.log('got analytics client id: '+this.gaClientId);
     });
   }
-
-  if ( ! this.offer) {
-    console.warn('PartiallyButton offer not defined');
-    return;
-  }
   if ( ! this.amount) {
-    console.warn('PartiallyButton amount not defined');
+    console.warn('Ekho Button amount not defined');
     return;
   }
 }
@@ -183,7 +177,7 @@ EkhoDealerButton.prototype.updateShopifyCart = function() {
 }
 
 EkhoDealerButton.prototype.updateShopifyProduct = function() {
-  console.log('PartiallyButton - setting shopify product');
+  console.log('Ekho Dealer Button - setting shopify product');
   this.meta.source = 'shopify';
   var p = this.shopifyProduct;
   if ( ! this.amount) this.amount = p.price / 100;
@@ -224,7 +218,7 @@ EkhoDealerButton.prototype.updateShopifyProduct = function() {
 
 EkhoDealerButton.prototype.shopifyVariantUpdated = function(e) {
   var variant = e.detail;
-  console.log('PartiallyButton - shopify variant updated');
+  console.log('EkhoDealerButton - shopify variant updated');
   if (variant && variant.available) {
     this.shopifyVariant = variant;
     var item = this.meta.items[0];
@@ -247,7 +241,7 @@ EkhoDealerButton.prototype.shopifyVariantUpdated = function(e) {
     if (item.image && item.image.startsWith('//')) item.image = 'https:' + item.image;
 
     if (this.elements.button) {
-      console.log('PartiallyButton updating button href');
+      console.log('EkhoDealerButton updating button href');
       this.elements.button.setAttribute('href', this.generateUrl());
     }
   }
@@ -279,7 +273,7 @@ EkhoDealerButton.prototype.attachWooVariantListener = function() {
   if (el && jQuery) {
     // can only listen from jquery
     jQuery('.single_variation_wrap').on('show_variation', function(event, variation) {
-      console.log('PartiallyButton caught variation changed');
+      console.log('EkhoDealerButton caught variation changed');
       console.log(variation);
       var variantName = Object.keys(variation.attributes)
          .map(function(k) {
@@ -330,7 +324,7 @@ EkhoDealerButton.prototype.getBigCommerceCartId = function() {
         }
       }
       else {
-        console.error('partial.ly: error getting BigCommerce cart');
+        console.error('EkhoDealer: error getting BigCommerce cart');
       }
     }
   }.bind(this);
@@ -430,7 +424,7 @@ function serialize(obj, prefix) {
 
 EkhoDealerButton.prototype.generateUrl = function() {
   // build the URL
-  var url = this.baseUrl + '/checkout?offer='+this.offer+'&amount='+this.amount
+  var url = this.baseUrl + '/checkout?'+'&amount='+this.amount
 
   // check for a return url
   if (this.returnUrl) {
@@ -497,7 +491,6 @@ EkhoDealerButton.prototype.generateForm = function() {
   form.innerHTML = '';
 
   // add hidden inputs
-  this.addHiddenInput('offer', this.offer);
   this.addHiddenInput('amount', this.amount);
 
   // check for a return url
@@ -646,7 +639,7 @@ EkhoDealerButton.prototype.attachButton = function() {
     btn.setAttribute('href', generatedUrl);
     // test if browser truncated URL
     if (btn.href != generatedUrl) {
-      console.warn('Partial.ly: browser truncated URL. Generating form');
+      console.warn('EkhoDealerButton: browser truncated URL. Generating form');
       this.urlTruncated = true;
       // generate the form
       this.generateForm();
@@ -655,15 +648,15 @@ EkhoDealerButton.prototype.attachButton = function() {
     // attach click handler
     btn.addEventListener('click', this.buttonClicked.bind(this));
   } else {
-    console.warn('PartiallyButton could not attach to element at '+this.attachSelector);
+    console.warn('EkhoDealerButton could not attach to element at '+this.attachSelector);
   }
 }
 
 EkhoDealerButton.prototype.buttonClicked = function(e) {
-  console.log('PartiallyButton clicked');
+  console.log('EkhoDealerButton clicked');
   e.preventDefault();
   e.stopImmediatePropagation();
-  console.log('PartiallyButton - stopped event propagation');
+  console.log('EkhoDealerButton - stopped event propagation');
 
   if (this.urlTruncated && this.elements.form) {
     this.elements.form.submit();
@@ -684,7 +677,7 @@ EkhoDealerButton.prototype.quantityUpdateEvent = function(e) {
       prod.quantity = q;
       prod.total = q * prod.price;
       this.amount = prod.total;
-      console.log('PartiallyButton updated qty to '+q+' and amount='+this.amount);
+      console.log('EkhoDealerButton updated qty to '+q+' and amount='+this.amount);
       // update amount
       // reset button href
       this.updateButtonHref();
@@ -699,7 +692,7 @@ EkhoDealerButton.prototype.noteUpdated = function() {
 EkhoDealerButton.prototype.attachQuantityListener = function() {
   var el = document.querySelector(this.quantitySelector);
   if ( ! el) {
-    console.warn('PartiallyButton could not find quantity with selector '+this.quantitySelector);
+    console.warn('EkhoDealerButton could not find quantity with selector '+this.quantitySelector);
     return;
   }
   el.addEventListener('keyup', this.quantityUpdateEvent.bind(this));
@@ -735,7 +728,7 @@ EkhoDealerButton.prototype.init = function() {
   }
 }
 
-window.PartiallyButton = EkhoDealerButton;
+window.EkhoDealerButton = EkhoDealerButton;
 
 // see if there's a default config to auto init a button
 if (document.ekhoDealerButtonConfig) {
