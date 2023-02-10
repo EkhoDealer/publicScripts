@@ -612,6 +612,7 @@ EkhoDealerButton.prototype.renderButton = function() {
     }
 
     el.appendChild(btn);
+    
 
     this.elements.button = btn;
 
@@ -625,6 +626,12 @@ EkhoDealerButton.prototype.renderButton = function() {
 
     // attach click handler
     btn.addEventListener('click', this.buttonClicked.bind(this));
+
+    // Try inserting some text underneath the button that describes what Ekho Dealer is
+    var p = document.createElement("p");
+    p.setAttribute('class', 'ekhoDealerCheckoutButtonDisclaimer');
+    p.innerHTML = "Ekh Dealer, LLC is a registered new vehicle dealer and allows you to finance, register, and title your vehicle online in a couple of minutes. <a href='https://ekhodealer.com' target='_blank'>Learn more.r</a>";
+    el.appendChild(p);
   }
   else {
     console.warn('Ekho Dealer button could not render to selector '+this.renderSelector);
