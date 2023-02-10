@@ -32,6 +32,10 @@ a.ekhoDealerCheckoutButton img{
     display:none
 }
 
+p.ekhoDealerCheckoutButtonDisclaimer {
+    font-size: 11px;
+}
+
 
 a.ekhoDealerCheckoutButton.showLogo.logoGlyph:after{
     width:42px;
