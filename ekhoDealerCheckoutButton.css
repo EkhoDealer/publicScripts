@@ -33,7 +33,11 @@ a.ekhoDealerCheckoutButton img{
 }
 
 p.ekhoDealerCheckoutButtonDisclaimer {
-    font-size: 11px;
+    margin-top: 0px;
+    line-height: 14px;
+    font-size: 9px;
+    hyphens: auto !important;
+    word-break: break-all;
 }
 
 
