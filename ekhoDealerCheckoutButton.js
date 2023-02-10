@@ -147,7 +147,7 @@ EkhoDealerButton.prototype.updateShopifyCart = function() {
     };
     // Try adding tags
     if (item.product_type) { 
-      data.tags = [item.product_type];
+      data.tags = [ {name: item.product_type}];
     }
     
     // this will factor in cart discounts
